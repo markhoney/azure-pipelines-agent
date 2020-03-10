@@ -164,15 +164,8 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
             // Can we ensure that the certs are always trusted? That's trickier.
             // We could require a min nuget version, then dump a nuget config file in the folder we are runing the tests. That should work?
 
-
-
-            // TODO: Add a signed task
-
             // Arrange
             string fingerprint = SetupSigningCert();
-
-
-            // Need to get IConfigurationStore
             FakeBuildServer fakeConfigurationStore = GetMockedService<FakeBuildServer>();
             AgentSettings settings = fakeConfigurationStore.GetSettings();
             settings.Fingerprint = fingerprint;
@@ -211,7 +204,7 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
                 DisplayName = "CmdLine",
                 Id = Guid.NewGuid()
             };
-            step.Inputs.Add("script", script);
+            // step.Inputs.Add("script", script);
 
             return step;
         }
