@@ -158,10 +158,23 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
         // TODO: When NuGet works cross-platform, remove these traits. Also, package NuGet with the Agent.
         [Trait("SkipOn", "darwin")]
         [Trait("SkipOn", "linux")]
-        public async Task Foo_Bar()
+        public async Task SignatureEnforcementMode_PassesWhenAllTasksAreSigned()
         {
             // Can we ensure that the certs are always trusted? That's trickier.
             // We could require a min nuget version, then dump a nuget config file in the folder we are runing the tests. That should work?
+
+
+
+
+            // Arrange
+
+
+            // Act
+
+
+            // Assert
+
+
 
         }
 
