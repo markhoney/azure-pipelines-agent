@@ -166,7 +166,7 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
 
             // Arrange
             string fingerprint = SetupSigningCert();
-            FakeBuildServer fakeConfigurationStore = GetMockedService<FakeBuildServer>();
+            FakeConfigurationStore fakeConfigurationStore = GetMockedService<FakeConfigurationStore>();
             AgentSettings settings = fakeConfigurationStore.GetSettings();
             settings.Fingerprint = fingerprint;
             fakeConfigurationStore.UpdateSettings(settings);
