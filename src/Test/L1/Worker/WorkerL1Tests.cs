@@ -190,8 +190,13 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
             return string.Empty;
         }
 
+        // TODO: Do this with CertA and CertB
+        // Include those in the repo so we can modify tasks if need be? Otherwise can't recreate
+        // Might need tasksource folder
         private static TaskStep GetSignedTask()
         {
+            // TODO: Manually copy into E:\github\vsts-agent\_l1\externals\Tasks\d9bafed4-0b18-4f58-968d-86655b4d2ce9 for now
+
             var step = new TaskStep
             {
                 Reference = new TaskStepDefinitionReference
