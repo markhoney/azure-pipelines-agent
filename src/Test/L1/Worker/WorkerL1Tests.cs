@@ -3,6 +3,7 @@
 
 using Microsoft.TeamFoundation.DistributedTask.Pipelines;
 using Microsoft.TeamFoundation.DistributedTask.WebApi;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -165,8 +166,7 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
 
 
 
-            // TODO: Where can we set the .agent settings/pass config to this?
-            // Do it by updating the mocked out config settings, probably in the base class for this.
+            // TODO: Add a signed task
 
             // Arrange
             string fingerprint = SetupSigningCert();
@@ -179,6 +179,9 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
             fakeConfigurationStore.UpdateSettings(settings);
 
             var message = LoadTemplateMessage();
+            // Clear steps then add a signed one
+            message.Steps.Clear();
+            message.Steps.Add(GetSignedTask());
 
             // Act
             var results = await RunWorker(message);
@@ -192,6 +195,25 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
         private string SetupSigningCert()
         {
             return string.Empty;
+        }
+
+        private static TaskStep GetSignedTask()
+        {
+            var step = new TaskStep
+            {
+                Reference = new TaskStepDefinitionReference
+                {
+                    Id = Guid.Parse("d9bafed4-0b18-4f58-968d-86655b4d2ce9"),
+                    Name = "CmdLine",
+                    Version = "2.164.0"
+                },
+                Name = "CmdLine",
+                DisplayName = "CmdLine",
+                Id = Guid.NewGuid()
+            };
+            step.Inputs.Add("script", script);
+
+            return step;
         }
 
         // Enable this test when read only variable enforcement is added
