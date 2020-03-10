@@ -113,7 +113,7 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
                 SetupMocks(context);
 
                 // Use different working directories for each test
-                var config = GetMockedService<FakeConfigurationStore>();
+                var config = GetMockedService<FakeConfigurationStore>(); // TODO: Need to update this. can hack it for now.
                 config.WorkingDirectoryName = testName;
 
                 await SetupMessage(context, message);

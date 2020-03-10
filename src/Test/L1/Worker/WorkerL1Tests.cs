@@ -165,17 +165,33 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
 
 
 
+            // TODO: Where can we set the .agent settings/pass config to this?
+            // Do it by updating the mocked out config settings, probably in the base class for this.
 
             // Arrange
+            string fingerprint = SetupSigningCert();
 
+
+            // Need to get IConfigurationStore
+            FakeBuildServer fakeConfigurationStore = GetMockedService<FakeBuildServer>();
+            AgentSettings settings = fakeConfigurationStore.GetSettings();
+            settings.Fingerprint = fingerprint;
+            fakeConfigurationStore.UpdateSettings(settings);
+
+            var message = LoadTemplateMessage();
 
             // Act
-
+            var results = await RunWorker(message);
 
             // Assert
+            AssertJobCompleted();
+            Assert.Equal(TaskResult.Succeeded, results.Result);
+        }
 
-
-
+        // Setup signing cert and return fingerprint
+        private string SetupSigningCert()
+        {
+            return string.Empty;
         }
 
         // Enable this test when read only variable enforcement is added

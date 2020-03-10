@@ -34,13 +34,25 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
             return null;
         }
 
+        private AgentSettings _agentSettings;
+
         public AgentSettings GetSettings()
         {
-            return new AgentSettings
+            if (_agentSettings == null)
             {
-                AgentName = "TestAgent",
-                WorkFolder = RootFolder + "/w"
-            };
+                _agentSettings = new AgentSettings
+                {
+                    AgentName = "TestAgent",
+                    WorkFolder = RootFolder + "/w"
+                };
+            }
+
+            return _agentSettings;
+        }
+
+        public void UpdateSettings(AgentSettings agentSettings)
+        {
+            _agentSettings = agentSettings;
         }
 
         public void SaveCredential(CredentialData credential)
