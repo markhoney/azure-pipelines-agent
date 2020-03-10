@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <!-- Required elements-->
+        <id>Task</id>
+        <version>0.0.0</version>
+        <description>This is used for signing only.</description>
+        <authors>This is used for signing only.</authors>
+
+        <!-- Optional elements -->
+        <certificateFingerprint>F25A1708C41B49011641458B2108F230F0B968484E329ED6018BD5E8A279AABD</certificateFingerprint>
+    </metadata>
+    <!-- Optional 'files' node -->
+</package>
