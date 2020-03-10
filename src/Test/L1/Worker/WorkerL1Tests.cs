@@ -152,6 +152,19 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
             Assert.Equal(0, GetMockedService<FakeBuildServer>().BuildTags.Count);
         }
 
+        [Fact]
+        [Trait("Level", "L1")]
+        [Trait("Category", "Worker")]
+        // TODO: When NuGet works cross-platform, remove these traits. Also, package NuGet with the Agent.
+        [Trait("SkipOn", "darwin")]
+        [Trait("SkipOn", "linux")]
+        public async Task Foo_Bar()
+        {
+            // Can we ensure that the certs are always trusted? That's trickier.
+            // We could require a min nuget version, then dump a nuget config file in the folder we are runing the tests. That should work?
+
+        }
+
         // Enable this test when read only variable enforcement is added
         /*[Fact]
         [Trait("Level", "L1")]
