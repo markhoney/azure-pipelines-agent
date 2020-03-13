@@ -1,8 +1,8 @@
 {
     "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
     "id": "BC505E8E-03BC-4CE1-97B5-93098DEE5B30",
-    "name": "MySpecialTaskSIGNED",
-    "friendlyName": "My Special Task SIGNED",
+    "name": "SignedTaskCertA",
+    "friendlyName": "SignedTaskCertA",
     "description": "Description of my task.",
     "helpMarkDown": "",
     "category": "Utility",
