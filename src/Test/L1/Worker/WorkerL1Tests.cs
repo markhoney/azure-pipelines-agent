@@ -184,6 +184,24 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
             Assert.Equal(TaskResult.Succeeded, results.Result);
         }
 
+        public async Task SignatureEnforcementMode_FailsWhenTasksArentSigned()
+        {
+            // Arrange
+            string fingerprint = SetupSigningCert();
+            FakeConfigurationStore fakeConfigurationStore = GetMockedService<FakeConfigurationStore>();
+            AgentSettings settings = fakeConfigurationStore.GetSettings();
+            settings.Fingerprint = fingerprint;
+            fakeConfigurationStore.UpdateSettings(settings);
+            var message = LoadTemplateMessage();
+
+            // Act
+            var results = await RunWorker(message);
+
+            // Assert
+            AssertJobCompleted();
+            Assert.Equal(TaskResult.Failed, results.Result);
+        }
+
         // Setup signing cert and return fingerprint
         private string SetupSigningCert()
         {
