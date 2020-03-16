@@ -165,10 +165,9 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
             // We could require a min nuget version, then dump a nuget config file in the folder we are runing the tests. That should work?
 
             // Arrange
-            string fingerprint = SetupSigningCert();
             FakeConfigurationStore fakeConfigurationStore = GetMockedService<FakeConfigurationStore>();
             AgentSettings settings = fakeConfigurationStore.GetSettings();
-            settings.Fingerprint = fingerprint;
+            settings.Fingerprint = _fingerprint;
             fakeConfigurationStore.UpdateSettings(settings);
 
             var message = LoadTemplateMessage();
@@ -184,13 +183,20 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
             Assert.Equal(TaskResult.Succeeded, results.Result);
         }
 
+        private static string _fingerprint = "3F9001EA83C560D712C24CF213C3D312CB3BFF51EE89435D3430BD06B5D0EECE";
+
+        [Fact]
+        [Trait("Level", "L1")]
+        [Trait("Category", "Worker")]
+        // TODO: When NuGet works cross-platform, remove these traits. Also, package NuGet with the Agent.
+        [Trait("SkipOn", "darwin")]
+        [Trait("SkipOn", "linux")]
         public async Task SignatureEnforcementMode_FailsWhenTasksArentSigned()
         {
             // Arrange
-            string fingerprint = SetupSigningCert();
             FakeConfigurationStore fakeConfigurationStore = GetMockedService<FakeConfigurationStore>();
             AgentSettings settings = fakeConfigurationStore.GetSettings();
-            settings.Fingerprint = fingerprint;
+            settings.Fingerprint = _fingerprint;
             fakeConfigurationStore.UpdateSettings(settings);
             var message = LoadTemplateMessage();
 
@@ -202,32 +208,27 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
             Assert.Equal(TaskResult.Failed, results.Result);
         }
 
-        // Setup signing cert and return fingerprint
-        private string SetupSigningCert()
-        {
-            return string.Empty;
-        }
-
         // TODO: Do this with CertA and CertB
         // Include those in the repo so we can modify tasks if need be? Otherwise can't recreate
         // Might need tasksource folder
         private static TaskStep GetSignedTask()
         {
-            // TODO: Manually copy into E:\github\vsts-agent\_l1\externals\Tasks\d9bafed4-0b18-4f58-968d-86655b4d2ce9 for now
+            // TODO: Manually copy into D:\github\vsts-agent\_l1\externals\Tasks\5515f72c-5faa-4121-8a46-8f42a8f42132 for now
+            // Then publish to CIPlat.Externals and get it from there
+            // Test on clean install
 
             var step = new TaskStep
             {
                 Reference = new TaskStepDefinitionReference
                 {
-                    Id = Guid.Parse("d9bafed4-0b18-4f58-968d-86655b4d2ce9"),
-                    Name = "CmdLine",
-                    Version = "2.164.0"
+                    Id = Guid.Parse("5515f72c-5faa-4121-8a46-8f42a8f42132"),
+                    Name = "servicetree-link-build-task-signed",
+                    Version = "1.52.1"
                 },
-                Name = "CmdLine",
-                DisplayName = "CmdLine",
+                Name = "servicetree-link-build-task-signed",
+                DisplayName = "ServiceTree Integration - SIGNED",
                 Id = Guid.NewGuid()
             };
-            // step.Inputs.Add("script", script);
 
             return step;
         }

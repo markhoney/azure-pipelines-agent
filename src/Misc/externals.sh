@@ -188,6 +188,5 @@ fi
 if [[ "$L1_MODE" != "" || "$PRECACHE" != "" ]]; then
     # cmdline task
     acquireExternalTool "$CONTAINER_URL/l1Tasks/d9bafed4-0b18-4f58-968d-86655b4d2ce9.zip" "Tasks/d9bafed4-0b18-4f58-968d-86655b4d2ce9" ""
-    # acquireExternalTool tasksigned with cert 1
-    # acquireExternalTool tasksigned with cert 2
+    # acquireExternalTool tasksigned with cert 1, but we need the zip not the extracted task
 fi
