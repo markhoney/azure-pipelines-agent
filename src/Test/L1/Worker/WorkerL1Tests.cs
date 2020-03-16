@@ -188,7 +188,7 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
         //     Assert.Equal(TaskResult.Succeeded, results.Result);
         // }
 
-        //private static string _fingerprint = "3F9001EA83C560D712C24CF213C3D312CB3BFF51EE89435D3430BD06B5D0EECE";
+        private static string _fingerprint = "3F9001EA83C560D712C24CF213C3D312CB3BFF51EE89435D3430BD06B5D0EECE";
 
         [Fact]
         [Trait("Level", "L1")]
@@ -201,10 +201,10 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
             // Arrange
             SetupL1();
             FakeConfigurationStore fakeConfigurationStore = GetMockedService<FakeConfigurationStore>();
-            // AgentSettings settings = fakeConfigurationStore.GetSettings();
-            // settings.Fingerprint = _fingerprint;
-            // fakeConfigurationStore.UpdateSettings(settings);
-            // var message = LoadTemplateMessage();
+            AgentSettings settings = fakeConfigurationStore.GetSettings();
+            settings.Fingerprint = _fingerprint;
+            fakeConfigurationStore.UpdateSettings(settings);
+            var message = LoadTemplateMessage();
 
             // // Act
             // var results = await RunWorker(message);
