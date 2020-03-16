@@ -206,12 +206,12 @@ namespace Microsoft.VisualStudio.Services.Agent.Tests.L1.Worker
             fakeConfigurationStore.UpdateSettings(settings);
             var message = LoadTemplateMessage();
 
-            // // Act
-            // var results = await RunWorker(message);
+            // Act
+            var results = await RunWorker(message);
 
-            // // Assert
-            // AssertJobCompleted();
-            // Assert.Equal(TaskResult.Failed, results.Result);
+            // Assert
+            AssertJobCompleted();
+            Assert.Equal(TaskResult.Failed, results.Result);
         }
 
         private static TaskStep GetSignedTask()
