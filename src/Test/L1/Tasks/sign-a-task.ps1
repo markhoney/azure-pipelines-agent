@@ -4,7 +4,7 @@
 # e.g. - D:\github\vsts-agent\src\Test\L1\Tasks\SignedTaskCertA
 function ZipTaskFolder($taskPath) {
     Write-Host "Zipping task folder"
-    
+
     # e.g. - D:\github\vsts-agent\src\Test\L1\Tasks
     $parentDirectory = [System.IO.Path]::GetDirectoryName($taskPath)
 
@@ -20,24 +20,34 @@ function ZipTaskFolder($taskPath) {
     Compress-Archive -LiteralPath $filesInFolder -DestinationPath $zipPath -Force
 }
 
-ZipTaskFolder(Resolve-Path $args[0])
+function GenerateSignature() {
+    Write-Host "Generating signature"
+
+    $friendlyName = "NuGetTestCertTaskSigning-" + (Get-Random)
+    Write-Host $friendlyName
+
+    New-SelfSignedCertificate -Subject "CN=NuGet Test Developer, OU=Use for testing purposes ONLY" `
+                            -FriendlyName $friendlyName `
+                            -Type CodeSigning `
+                            -KeyUsage DigitalSignature `
+                            -KeyLength 2048 `
+                            -KeyAlgorithm RSA `
+                            -HashAlgorithm SHA256 `
+                            -Provider "Microsoft Enhanced RSA and AES Cryptographic Provider" `
+                            -CertStoreLocation "Cert:\CurrentUser\My"
+
+    # Print out fingerprint
+}
 
 
-Write-Host "Generating signature"
+GenerateSignature
+# ZipTaskFolder(Resolve-Path $args[0])
 
-# New-SelfSignedCertificate -Subject "CN=NuGet Test Developer, OU=Use for testing purposes ONLY" `
-#                           -FriendlyName "NuGetTestDeveloper" `
-#                           -Type CodeSigning `
-#                           -KeyUsage DigitalSignature `
-#                           -KeyLength 2048 `
-#                           -KeyAlgorithm RSA `
-#                           -HashAlgorithm SHA256 `
-#                           -Provider "Microsoft Enhanced RSA and AES Cryptographic Provider" `
-#                           -CertStoreLocation "Cert:\CurrentUser\My"
 
-# Write-Host "Signature generated"
 
-# Print out fingerprint
+
+
+
 
 
 # Write-Host "Signing task"
